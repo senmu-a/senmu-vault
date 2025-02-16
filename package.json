@@ -2,6 +2,7 @@
   "name": "senmu-vault",
   "version": "1.0.0",
   "main": "index.js",
+  "packageManager": "yarn@1.22.22",
   "repository": "git@github.com:senmu-a/senmu-vault.git",
   "author": "senmu <951967917@qq.com>",
   "license": "MIT",
