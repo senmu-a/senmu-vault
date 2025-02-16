@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true,
+      "decorators": true,
+      "dynamicImport": true
+    },
+    "transform": {
+      "legacyDecorator": true,
+      "decoratorMetadata": true,
+      "react": {
+        "runtime": "automatic",
+        "refresh": true,
+        "development": false,
+        "pragma": "React.createElement",
+        "pragmaFrag": "React.Fragment"
+      }
+    },
+    "target": "es2022",
+    "loose": true,
+    "externalHelpers": true,
+    "keepClassNames": true
+  },
+  "module": {
+    "type": "es6",
+    "strict": true,
+    "strictMode": true,
+    "lazy": true,
+    "noInterop": false
+  },
+  "minify": true,
+  "sourceMaps": true,
+  "exclude": ["node_modules", ".git", "dist"]
+}
