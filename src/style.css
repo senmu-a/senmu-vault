@@ -1,5 +1,9 @@
 @import 'tailwindcss';
-/* @import 'tailwindcss/base'; */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: var(--color-green-500);
+}
 
 html {
   transition: font-size 0.3s ease;
