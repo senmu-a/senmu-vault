@@ -15,7 +15,7 @@ function ChainSelect({
   return (
     <select
       value={activeChainId}
-      onChange={(event) => {
+      onChange={event => {
         switchChain(Number(event.target.value));
       }}
       disabled={switchChain === undefined}
@@ -24,7 +24,7 @@ function ChainSelect({
         Select chain
       </option>
       <option value={-1}>Default</option>
-      {chainIds.map((chainId) => (
+      {chainIds.map(chainId => (
         <option key={chainId} value={chainId}>
           {CHAINS[chainId]?.name ?? chainId}
         </option>
@@ -92,7 +92,7 @@ export function ConnectWithSelect({
         setError(err as Error);
       }
     },
-    [connector, activeChainId, setError]
+    [connector, activeChainId, setError],
   );
 
   return (
@@ -106,11 +106,7 @@ export function ConnectWithSelect({
       <div style={{ marginBottom: '1rem' }} />
       {isActive ? (
         error ? (
-          <button
-            onClick={() =>
-              desiredChainId !== null && switchChain(desiredChainId)
-            }
-          >
+          <button onClick={() => desiredChainId !== null && switchChain(desiredChainId)}>
             Try again?
           </button>
         ) : (

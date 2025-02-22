@@ -14,19 +14,20 @@ export const useSMToken = () => {
 
   useEffect(() => {
     if (!provider) return;
-    const contract = new Contract(
+    const contractInstance = new Contract(
       config.smToken.address,
-      config.smToken.abi,
-      provider.getSigner()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      config.smToken.abi as any,
+      provider.getSigner(),
     );
-    setContract(contract);
+    setContract(contractInstance);
   }, [provider, config]);
 
   const updateBalance = useCallback(async () => {
     if (!contract || !account) return;
     try {
-      const balance = await contract.balanceOf(account);
-      setBalance(formatEther(balance));
+      const balanceInstance = await contract.balanceOf(account);
+      setBalance(formatEther(balanceInstance));
     } catch (err) {
       console.error('Failed to fetch SM token balance:', err);
     }
@@ -39,25 +40,25 @@ export const useSMToken = () => {
     return () => clearInterval(interval);
   }, [updateBalance]);
 
-  const approve = useCallback(async (amount: string) => {
-    if (!contract || !account) throw new Error('Contract not initialized');
-    setIsLoading(true);
-    try {
-      const tx = await contract.approve(
-        config.depositContract.address,
-        parseEther(amount)
-      );
-      await tx.wait();
-      await updateBalance();
-    } finally {
-      setIsLoading(false);
-    }
-  }, [contract, account, config, updateBalance]);
+  const approve = useCallback(
+    async (amount: string) => {
+      if (!contract || !account) throw new Error('Contract not initialized');
+      setIsLoading(true);
+      try {
+        const tx = await contract.approve(config.depositContract.address, parseEther(amount));
+        await tx.wait();
+        await updateBalance();
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [contract, account, config, updateBalance],
+  );
 
   return {
     balance,
     approve,
     updateBalance,
-    isLoading
+    isLoading,
   };
 };

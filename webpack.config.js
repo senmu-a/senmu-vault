@@ -43,6 +43,10 @@ const webpackBaseConfig = {
       },
     ],
   },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {}
+  },
   resolve: {
     alias: {
       '@': resolve('src/'),
@@ -59,6 +63,7 @@ const webpackBaseConfig = {
       '@connectors': resolve('src/connectors'),
       '@abis': resolve('src/abis'),
       '@types': resolve('src/types'),
+      '@routes': resolve('src/routes'),
     },
     extensions: ['.js', '.ts', '.tsx', '.jsx', '.css'],
     fallback: {

@@ -26,6 +26,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title: 'Senmu-Vault',
       filename: 'index.html',
       favicon: './public/favicon.ico',
       template: resolve(__dirname, '../src/index-dev.html'),

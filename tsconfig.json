@@ -24,7 +24,8 @@
       "@utils/*": ["src/utils/*"],
       "@components/*": ["src/components/*"],
       "@abis/*": ["src/abis/*"],
-      "@connectors/*": ["src/connectors/*"]
+      "@connectors/*": ["src/connectors/*"],
+      "@routes/*": ["src/routes/*"],
     }
   },
   "include": ["src", "tests"],

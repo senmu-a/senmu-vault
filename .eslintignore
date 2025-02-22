@@ -1,0 +1,14 @@
+node_modules/
+backstop_data/
+dist/
+docs/
+cypress/
+config/
+tests/
+.eslintrc
+.prettierrc
+jest.config.js
+webpack.config.js
+postcss.config.js.
+cypress.config.js
+tailwind.config

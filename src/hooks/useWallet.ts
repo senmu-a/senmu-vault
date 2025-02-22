@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
-import { hooks, metaMask } from '@/connectors/metaMask';
+import { hooks, metaMask } from '@connectors/metaMask';
 
-const {
-  useChainId,
-  useAccounts,
-  useIsActivating,
-  useIsActive,
-  useProvider
-} = hooks;
+const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider } = hooks;
 
 export function useWallet() {
   const chainId = useChainId();
@@ -46,6 +40,6 @@ export function useWallet() {
     disconnect,
     account: accounts?.[0],
     chainId,
-    provider
+    provider,
   };
 }

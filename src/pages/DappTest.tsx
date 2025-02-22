@@ -1,5 +1,5 @@
-import MetaMaskCard from '@/components/connectorCards/MetaMaskCard';
-import { DepositForm } from '@/components/DepositForm';
+import MetaMaskCard from '@components/connectorCards/MetaMaskCard';
+import { DepositForm } from '@components/DepositForm';
 
 const DappTest = () => {
   return (

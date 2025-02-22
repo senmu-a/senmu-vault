@@ -9,8 +9,10 @@ const Header = () => {
 
   // 初始化主题
   useEffect(() => {
-    if (localStorage.theme === 'dark' || 
-      (!localStorage.theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (
+      localStorage.theme === 'dark' ||
+      (!localStorage.theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
       setIsDark(true);
       document.documentElement.classList.add('dark');
     } else {
@@ -56,17 +58,17 @@ const Header = () => {
 
           {/* 桌面端导航菜单 */}
           <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
+            {navigation.map(item => (
               <NavLink
                 key={item.name}
                 to={item.href}
-                end={item.href === "/"}
+                end={item.href === '/'}
                 className={({ isActive }) =>
                   `relative inline-flex items-center text-base font-medium transition-colors duration-200
                   ${
                     isActive
-                      ? "text-primary after:absolute after:bottom-[-18px] after:left-0 after:right-0 after:h-[2px] after:bg-primary"
-                      : "text-gray-700 dark:text-gray-300 hover:text-primary"
+                      ? 'text-primary after:absolute after:bottom-[-18px] after:left-0 after:right-0 after:h-[2px] after:bg-primary'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-primary'
                   }`
                 }
               >
@@ -97,11 +99,7 @@ const Header = () => {
                          rounded-md text-gray-700 dark:text-gray-50 hover:text-primary
                          hover:bg-gray-100"
             >
-              {isMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
@@ -110,17 +108,17 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4">
             <div className="space-y-2">
-              {navigation.map((item) => (
+              {navigation.map(item => (
                 <NavLink
                   key={item.name}
                   to={item.href}
-                  end={item.href === "/"}
+                  end={item.href === '/'}
                   className={({ isActive }) =>
                     `px-3 py-2 rounded-md text-base font-medium inline-flex items-center
                     ${
                       isActive
-                        ? "text-primary bg-primary/10 border-l-4 border-primary"
-                        : "text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50"
+                        ? 'text-primary bg-primary/10 border-l-4 border-primary'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50'
                     }`
                   }
                   onClick={() => setIsMenuOpen(false)}
@@ -139,13 +137,13 @@ const Header = () => {
                   连接钱包
                 </button>
                 <button
-                    onClick={toggleTheme}
-                    className="p-2 rounded-lg text-gray-500 hover:text-primary 
+                  onClick={toggleTheme}
+                  className="p-2 rounded-lg text-gray-500 hover:text-primary 
                               hover:bg-gray-100 dark:text-gray-400 
                               dark:hover:bg-gray-800 transition-colors"
-                    aria-label="切换主题"
-                  >
-                    {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                  aria-label="切换主题"
+                >
+                  {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                 </button>
               </div>
             </div>

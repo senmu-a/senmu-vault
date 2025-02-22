@@ -1,11 +1,11 @@
-import type { Web3ReactHooks } from '@web3-react/core'
+import type { Web3ReactHooks } from '@web3-react/core';
 
-import { CHAINS } from '@utils/chains'
+import { CHAINS } from '@utils/chains';
 
 export function Chain({ chainId }: { chainId: ReturnType<Web3ReactHooks['useChainId']> }) {
-  if (chainId === undefined) return null
+  if (chainId === undefined) return null;
 
-  const name = chainId ? CHAINS[chainId]?.name : undefined
+  const name = chainId ? CHAINS[chainId]?.name : undefined;
 
   if (name) {
     return (
@@ -15,12 +15,12 @@ export function Chain({ chainId }: { chainId: ReturnType<Web3ReactHooks['useChai
           {name} ({chainId})
         </b>
       </div>
-    )
+    );
   }
 
   return (
     <div>
       Chain Id: <b>{chainId}</b>
     </div>
-  )
+  );
 }

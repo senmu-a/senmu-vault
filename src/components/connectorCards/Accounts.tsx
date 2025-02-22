@@ -1,4 +1,4 @@
-import { formatWalletAddress } from '@/utils';
+import { formatWalletAddress } from '@utils/index';
 import type { BigNumber } from '@ethersproject/bignumber';
 import { formatEther } from '@ethersproject/units';
 import type { Web3ReactHooks } from '@web3-react/core';
@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 function useBalances(
   provider?: ReturnType<Web3ReactHooks['useProvider']>,
-  accounts?: string[]
+  accounts?: string[],
 ): BigNumber[] | undefined {
   const [balances, setBalances] = useState<BigNumber[] | undefined>();
 
@@ -14,12 +14,12 @@ function useBalances(
     if (provider && accounts?.length) {
       let stale = false;
 
-      void Promise.all(
-        accounts.map((account) => provider.getBalance(account))
-      ).then((iner_balances) => {
-        if (stale) return;
-        setBalances(iner_balances);
-      });
+      void Promise.all(accounts.map(account => provider.getBalance(account))).then(
+        iner_balances => {
+          if (stale) return;
+          setBalances(iner_balances);
+        },
+      );
 
       return () => {
         stale = true;

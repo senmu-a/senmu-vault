@@ -1,11 +1,11 @@
-export interface ContractConfig {
+export interface ContractConfig<T = unknown> {
   depositContract: {
     address: string;
-    abi: any[];
+    abi: T[];
   };
   smToken: {
     address: string;
-    abi: any[];
+    abi: T[];
   };
 }
 

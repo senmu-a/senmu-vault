@@ -1,15 +1,15 @@
-import { MetaMask } from '@web3-react/metamask'
-import type { Connector } from '@web3-react/types'
+import { MetaMask } from '@web3-react/metamask';
+import type { Connector } from '@web3-react/types';
 
 export function getName(connector: Connector) {
-  if (connector instanceof MetaMask) return 'MetaMask'
-  return 'Unknown'
+  if (connector instanceof MetaMask) return 'MetaMask';
+  return 'Unknown';
 }
 
 export const formatWalletAddress = (
   address: string,
   startLength: number = 6,
-  endLength: number = 4
+  endLength: number = 4,
 ): string => {
   if (!address) return '';
 

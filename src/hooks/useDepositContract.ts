@@ -22,16 +22,17 @@ export function useDepositContract() {
     if (!provider) return null;
     return new Contract(
       config.depositContract.address,
-      config.depositContract.abi,
-      provider.getSigner()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      config.depositContract.abi as any,
+      provider.getSigner(),
     );
   }, [provider, config]);
 
   const getBalance = useCallback(async () => {
     if (!contract || !account) return '0';
     try {
-      const balance = await contract.getBalance(NATIVE_ETH_ADDRESS, account);
-      const formattedBalance = formatEther(balance);
+      const balanceInstance = await contract.getBalance(NATIVE_ETH_ADDRESS, account);
+      const formattedBalance = formatEther(balanceInstance);
       setBalance(formattedBalance);
       return formattedBalance;
     } catch (err) {
@@ -43,8 +44,8 @@ export function useDepositContract() {
   const getSmBalance = useCallback(async () => {
     if (!contract || !account) return '0';
     try {
-      const balance = await contract.getBalance(SM_TOKEN_ADDRESS, account);
-      const formattedBalance = formatEther(balance);
+      const balanceInstance = await contract.getBalance(SM_TOKEN_ADDRESS, account);
+      const formattedBalance = formatEther(balanceInstance);
       setSmBalance(formattedBalance);
       return formattedBalance;
     } catch (err) {
@@ -56,8 +57,8 @@ export function useDepositContract() {
   const getNativeBalance = useCallback(async () => {
     if (!provider || !account) return '0';
     try {
-      const balance = await provider.getBalance(account);
-      const formattedBalance = formatEther(balance);
+      const balanceInstance = await provider.getBalance(account);
+      const formattedBalance = formatEther(balanceInstance);
       setNativeBalance(formattedBalance);
       return formattedBalance;
     } catch (err) {
@@ -70,7 +71,7 @@ export function useDepositContract() {
     await Promise.all([
       getBalance(),
       getSmBalance(),
-      getNativeBalance() // 新增：更新ETH余额
+      getNativeBalance(), // 新增：更新ETH余额
     ]);
   }, [getBalance, getSmBalance, getNativeBalance]);
 
@@ -81,61 +82,67 @@ export function useDepositContract() {
     return () => clearInterval(interval);
   }, [updateBalances]);
 
-  const deposit = useCallback(async (amount: string) => {
-    if (!contract) throw new Error('No provider');
-    setIsLoading(true);
-    try {
-      const tx = await contract.deposit({ 
-        value: parseEther(amount)
-      });
-      await tx.wait();
-      await updateBalances();
-    } finally {
-      setIsLoading(false);
-    }
-  }, [contract, updateBalances]);
+  const deposit = useCallback(
+    async (amount: string) => {
+      if (!contract) throw new Error('No provider');
+      setIsLoading(true);
+      try {
+        const tx = await contract.deposit({
+          value: parseEther(amount),
+        });
+        await tx.wait();
+        await updateBalances();
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [contract, updateBalances],
+  );
 
-  const withdraw = useCallback(async (amount: string) => {
-    if (!contract) throw new Error('No provider');
-    setIsLoading(true);
-    try {
-      const tx = await contract.withdraw(parseEther(amount));
-      await tx.wait();
-      await updateBalances();
-    } finally {
-      setIsLoading(false);
-    }
-  }, [contract, updateBalances]);
+  const withdraw = useCallback(
+    async (amount: string) => {
+      if (!contract) throw new Error('No provider');
+      setIsLoading(true);
+      try {
+        const tx = await contract.withdraw(parseEther(amount));
+        await tx.wait();
+        await updateBalances();
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [contract, updateBalances],
+  );
 
-  const depositSM = useCallback(async (amount: string) => {
-    if (!contract || !account) throw new Error('Contract not initialized');
-    setIsLoading(true);
-    try {
-      const tx = await contract.depositToken(
-        config.smToken.address,
-        parseEther(amount)
-      );
-      await tx.wait();
-      await updateBalances();
-    } finally {
-      setIsLoading(false);
-    }
-  }, [contract, account, config, updateBalances]);
+  const depositSM = useCallback(
+    async (amount: string) => {
+      if (!contract || !account) throw new Error('Contract not initialized');
+      setIsLoading(true);
+      try {
+        const tx = await contract.depositToken(config.smToken.address, parseEther(amount));
+        await tx.wait();
+        await updateBalances();
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [contract, account, config, updateBalances],
+  );
 
-  const withdrawSM = useCallback(async (amount: string) => {
-    if (!contract || !account) throw new Error('Contract not initialized');
-    setIsLoading(true);
-    try {
-      const tx = await contract.withdrawToken(
-        SM_TOKEN_ADDRESS,
-        parseEther(amount)
-      );
-      await tx.wait();
-      await updateBalances();
-    } finally {
-      setIsLoading(false);
-    }
-  }, [contract, account, updateBalances]);
+  const withdrawSM = useCallback(
+    async (amount: string) => {
+      if (!contract || !account) throw new Error('Contract not initialized');
+      setIsLoading(true);
+      try {
+        const tx = await contract.withdrawToken(SM_TOKEN_ADDRESS, parseEther(amount));
+        await tx.wait();
+        await updateBalances();
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [contract, account, updateBalances],
+  );
 
   return {
     ethBalance: balance,
@@ -146,6 +153,6 @@ export function useDepositContract() {
     depositSM,
     withdrawSM,
     isLoading,
-    updateBalances
+    updateBalances,
   };
 }
