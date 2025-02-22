@@ -26,6 +26,7 @@
       "@abis/*": ["src/abis/*"],
       "@connectors/*": ["src/connectors/*"],
       "@routes/*": ["src/routes/*"],
+      "@states/*": ["src/states/*"]
     }
   },
   "include": ["src", "tests"],
