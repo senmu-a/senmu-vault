@@ -8,6 +8,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack serve --mode development",
+    "serve": "serve dist -s",
+    "preview": "http-server dist",
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
     "lint:fix": "tsc --noEmit & eslint ./src --ext .ts,.tsx,.js --fix",
@@ -51,6 +53,7 @@
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.0",
     "webpack-merge": "^6.0.1",
+    "workbox-webpack-plugin": "^7.3.0",
     "yargs-parser": "^21.1.1"
   },
   "dependencies": {
