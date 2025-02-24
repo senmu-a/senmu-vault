@@ -1,9 +1,20 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, X, Wallet, Home, Wallet2, Sun, Moon } from 'lucide-react';
+import { useWallet } from '@hooks/useWallet';
 import Switch from './Switch';
+import { WalletDropdown } from './WalletDropdown';
 
 const Header = () => {
+  const {
+    isActive: active,
+    isActivating,
+    connect,
+    disconnect,
+    account,
+    formatAddress,
+    chainId,
+  } = useWallet();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
 
@@ -20,6 +31,19 @@ const Header = () => {
       document.documentElement.classList.remove('dark');
     }
   }, []);
+
+  // 处理钱包连接
+  const handleWallet = async () => {
+    if (active) {
+      disconnect();
+    } else {
+      try {
+        await connect();
+      } catch (err) {
+        console.error('Failed to connect:', err);
+      }
+    }
+  };
 
   // 切换主题
   const toggleTheme = () => {
@@ -81,14 +105,26 @@ const Header = () => {
           {/* 右侧功能区 */}
           <div className="hidden md:flex items-center space-x-4">
             <Switch checked={isDark} onChange={toggleTheme} />
-            <button
-              className="inline-flex items-center px-4 py-2 rounded-lg
-                         bg-primary text-white hover:opacity-90
-                         transition-opacity duration-200 cursor-pointer"
-            >
-              <Wallet className="w-5 h-5 mr-2" />
-              连接钱包
-            </button>
+            {active ? (
+              <WalletDropdown
+                account={account || ''}
+                disconnect={disconnect}
+                formatAddress={formatAddress}
+                chainId={chainId}
+              />
+            ) : (
+              <button
+                onClick={handleWallet}
+                disabled={isActivating}
+                className="inline-flex items-center px-4 py-2 rounded-lg
+                   bg-primary text-white hover:opacity-90
+                   transition-opacity duration-200 cursor-pointer
+                   disabled:opacity-50"
+              >
+                <Wallet className="w-5 h-5 mr-2" />
+                {isActivating ? '连接中...' : '连接钱包'}
+              </button>
+            )}
           </div>
 
           {/* 移动端菜单按钮 */}
@@ -128,14 +164,26 @@ const Header = () => {
                 </NavLink>
               ))}
               <div className="flex items-center justify-between mt-2">
-                <button
-                  className="flex-1 inline-flex items-center justify-center
-                            px-4 py-2 rounded-lg bg-primary text-white
-                            hover:opacity-90 transition-opacity duration-200"
-                >
-                  <Wallet className="w-5 h-5 mr-2" />
-                  连接钱包
-                </button>
+                {active ? (
+                  <WalletDropdown
+                    account={account || ''}
+                    disconnect={disconnect}
+                    formatAddress={formatAddress}
+                    chainId={chainId}
+                  />
+                ) : (
+                  <button
+                    onClick={handleWallet}
+                    disabled={isActivating}
+                    className="flex-1 inline-flex items-center justify-center
+                  px-4 py-2 rounded-lg bg-primary text-white
+                  hover:opacity-90 transition-opacity duration-200
+                  disabled:opacity-50"
+                  >
+                    <Wallet className="w-5 h-5 mr-2" />
+                    {isActivating ? '连接中...' : '连接钱包'}
+                  </button>
+                )}
                 <button
                   onClick={toggleTheme}
                   className="p-2 rounded-lg text-gray-500 hover:text-primary 

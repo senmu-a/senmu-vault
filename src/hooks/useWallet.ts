@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { hooks, metaMask } from '@connectors/metaMask';
 
 const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider } = hooks;
@@ -14,6 +14,10 @@ export function useWallet() {
     void metaMask.connectEagerly().catch(() => {
       console.debug('Failed to connect eagerly to metamask');
     });
+  }, []);
+
+  const formatAddress = useCallback((address: string) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
   }, []);
 
   const connect = async () => {
@@ -41,5 +45,6 @@ export function useWallet() {
     account: accounts?.[0],
     chainId,
     provider,
+    formatAddress,
   };
 }
