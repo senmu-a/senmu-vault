@@ -7,13 +7,15 @@ const _modeflag = _mode === 'production' ? true : false;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 const { ThemedProgressPlugin } = require('themed-progress-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const webpackBaseConfig = {
   entry: {
     main: resolve('src/main.tsx'),
   },
   output: {
     path: resolve(__dirname, 'dist'),
-    clean: true
+    clean: true,
   },
   module: {
     rules: [
@@ -31,10 +33,7 @@ const webpackBaseConfig = {
       },
       {
         test: /\.css$/i,
-        include: [
-          resolve(__dirname, 'src'),
-          resolve(__dirname, 'node_modules'),
-        ],
+        include: [resolve(__dirname, 'src'), resolve(__dirname, 'node_modules')],
         use: [
           MiniCssExtractPlugin.loader,
           { loader: 'css-loader', options: { importLoaders: 1 } },
@@ -45,7 +44,7 @@ const webpackBaseConfig = {
   },
   optimization: {
     runtimeChunk: 'single',
-    splitChunks: {}
+    splitChunks: {},
   },
   resolve: {
     alias: {
@@ -73,15 +72,14 @@ const webpackBaseConfig = {
   plugins: [
     new Dotenv(),
     new MiniCssExtractPlugin({
-      filename: _modeflag
-        ? 'styles/[name].[contenthash:5].css'
-        : 'styles/[name].css',
-      chunkFilename: _modeflag
-        ? 'styles/[name].[contenthash:5].css'
-        : 'styles/[name].css',
+      filename: _modeflag ? 'styles/[name].[contenthash:5].css' : 'styles/[name].css',
+      chunkFilename: _modeflag ? 'styles/[name].[contenthash:5].css' : 'styles/[name].css',
       ignoreOrder: false,
     }),
     new ThemedProgressPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'public', to: '' }],
+    }),
   ],
 };
 module.exports = merge.default(webpackBaseConfig, _mergeConfig);

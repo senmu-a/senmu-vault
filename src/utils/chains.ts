@@ -40,25 +40,25 @@ export const MAINNET_CHAINS: ChainConfig = {
     ].filter(Boolean),
     name: 'Mainnet',
   },
-  10: {
-    urls: [getInfuraUrlFor('optimism-mainnet'), 'https://mainnet.optimism.io'].filter(Boolean),
-    name: 'Optimism',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://optimistic.etherscan.io'],
-  },
-  42161: {
-    urls: [getInfuraUrlFor('arbitrum-mainnet'), 'https://arb1.arbitrum.io/rpc'].filter(Boolean),
-    name: 'Arbitrum One',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://arbiscan.io'],
-  },
+  // 10: {
+  //   urls: [getInfuraUrlFor('optimism-mainnet'), 'https://mainnet.optimism.io'].filter(Boolean),
+  //   name: 'Optimism',
+  //   nativeCurrency: ETH,
+  //   blockExplorerUrls: ['https://optimistic.etherscan.io'],
+  // },
+  // 42161: {
+  //   urls: [getInfuraUrlFor('arbitrum-mainnet'), 'https://arb1.arbitrum.io/rpc'].filter(Boolean),
+  //   name: 'Arbitrum One',
+  //   nativeCurrency: ETH,
+  //   blockExplorerUrls: ['https://arbiscan.io'],
+  // },
 };
 
 export const TESTNET_CHAINS: ChainConfig = {
-  5: {
-    urls: [getInfuraUrlFor('goerli')].filter(Boolean),
-    name: 'Görli',
-  },
+  // 5: {
+  //   urls: [getInfuraUrlFor('goerli')].filter(Boolean),
+  //   name: 'Görli',
+  // },
   11155111: {
     urls: [getInfuraUrlFor('sepolia')].filter(Boolean),
     name: 'Sepolia',
@@ -70,20 +70,20 @@ export const TESTNET_CHAINS: ChainConfig = {
     nativeCurrency: ETH,
     name: 'Location',
   },
-  420: {
-    urls: [getInfuraUrlFor('optimism-goerli'), 'https://goerli.optimism.io'].filter(Boolean),
-    name: 'Optimism Goerli',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://goerli-explorer.optimism.io'],
-  },
-  421613: {
-    urls: [getInfuraUrlFor('arbitrum-goerli'), 'https://goerli-rollup.arbitrum.io/rpc'].filter(
-      Boolean,
-    ),
-    name: 'Arbitrum Goerli',
-    nativeCurrency: ETH,
-    blockExplorerUrls: ['https://testnet.arbiscan.io'],
-  },
+  // 420: {
+  //   urls: [getInfuraUrlFor('optimism-goerli'), 'https://goerli.optimism.io'].filter(Boolean),
+  //   name: 'Optimism Goerli',
+  //   nativeCurrency: ETH,
+  //   blockExplorerUrls: ['https://goerli-explorer.optimism.io'],
+  // },
+  // 421613: {
+  //   urls: [getInfuraUrlFor('arbitrum-goerli'), 'https://goerli-rollup.arbitrum.io/rpc'].filter(
+  //     Boolean,
+  //   ),
+  //   name: 'Arbitrum Goerli',
+  //   nativeCurrency: ETH,
+  //   blockExplorerUrls: ['https://testnet.arbiscan.io'],
+  // },
 };
 
 export const CHAINS: ChainConfig = {

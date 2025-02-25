@@ -7,13 +7,7 @@ export interface NetworkInfo {
   icon: string;
 }
 
-interface WalletBalancesProps {
-  chainId?: number;
-}
-
-// TODO: 处理钱包余额
-export function useWalletBalances({ chainId }: WalletBalancesProps) {
-  console.log(chainId);
+export function useWalletBalances() {
   return useMemo(() => {
     return Object.entries(CHAINS).map(([id, chain]) => ({
       name: chain.name,
