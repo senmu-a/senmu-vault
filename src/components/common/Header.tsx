@@ -40,6 +40,7 @@ const Header = () => {
       try {
         await connect();
       } catch (err) {
+        // 可能是用户没有输入密码，或者关闭了弹窗，或者其他原因
         console.error('Failed to connect:', err);
       }
     }

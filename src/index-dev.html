@@ -7,5 +7,15 @@
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        // 开发环境下注销 Service Worker
+        navigator.serviceWorker.getRegistrations().then(function (registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+    </script>
   </body>
 </html>

@@ -21,12 +21,56 @@ export function useWallet() {
   }, []);
 
   const connect = async () => {
-    try {
-      await metaMask.activate();
-    } catch (err) {
-      console.error('Failed to connect to MetaMask:', err);
-      throw err;
-    }
+    const resetWalletState = async () => {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const ethereum = (window as any).ethereum;
+
+        // 先尝试直接处理掉待处理的请求
+        if (ethereum?.request) {
+          try {
+            // 直接请求账户，这会清除之前的待处理请求
+            await ethereum.request({
+              method: 'wallet_requestPermissions',
+              params: [{ eth_accounts: {} }],
+            });
+          } catch (permError) {
+            console.debug('Permission request failed:', permError);
+          }
+        }
+
+        // 清理所有监听器
+        if (provider?.removeAllListeners) {
+          provider.removeAllListeners();
+        }
+
+        if (ethereum?.removeAllListeners) {
+          ethereum.removeAllListeners('connect');
+          ethereum.removeAllListeners('accountsChanged');
+          ethereum.removeAllListeners('chainChanged');
+          ethereum.removeAllListeners('disconnect');
+        }
+        // 给 MetaMask 一点时间处理完所有请求
+        await new Promise(resolve => setTimeout(resolve, 100));
+      } catch (error) {
+        console.debug('Reset state failed:', error);
+      }
+    };
+
+    const tryConnect = async () => {
+      try {
+        await metaMask.activate();
+      } catch (err: unknown) {
+        console.debug('MetaMask connection attempt failed:', (err as Error)?.message);
+
+        if ((err as Error)?.message.includes('Already processing eth_requestAccounts')) {
+          await resetWalletState();
+        }
+        throw err;
+      }
+    };
+
+    return tryConnect();
   };
 
   const disconnect = () => {
