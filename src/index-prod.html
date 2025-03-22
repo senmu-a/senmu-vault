@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= htmlWebpackPlugin.options.title %></title>
     </style>
+    <% if (typeof vendorFile !== 'undefined') { %>
+      <script src="<%= vendorFile %>" crossorigin="anonymous" fetchpriority="high"></script>
+    <% } %>
   </head>
   <body>
     <div id="app">

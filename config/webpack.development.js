@@ -3,6 +3,8 @@ const { resolve, join } = require('path');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 const notifier = require('node-notifier');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const InlineChunkHtmlPlugin = require('inline-chunk-html-plugin');
+
 const port = 3000;
 module.exports = {
   devServer: {
@@ -28,6 +30,22 @@ module.exports = {
       title: 'Senmu-Vault',
       filename: 'index.html',
       favicon: './public/favicon.ico',
+      scriptLoading: 'defer',
+      inject: true,
+      templateParameters: (compilation, assets, options) => {
+        const files = assets.js || [];
+        const vendorFile = files.find(file => file.includes('react-vendor')) || '';
+        
+        return {
+          htmlWebpackPlugin: {
+            tags: assets,
+            options: options
+          },
+          files,
+          vendorFile,
+          options
+        };
+      },
       template: resolve(__dirname, '../src/index-dev.html'),
     }),
     new FriendlyErrorsWebpackPlugin({
@@ -50,6 +68,8 @@ module.exports = {
       },
       clearConsole: true,
     }),
-    // new BundleAnalyzerPlugin(),
+    // 使用 InlineChunkHtmlPlugin 替代
+    new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
+    new BundleAnalyzerPlugin(),
   ],
 };

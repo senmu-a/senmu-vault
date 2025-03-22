@@ -4,6 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const { resolve } = require('path');
+const InlineChunkHtmlPlugin = require('inline-chunk-html-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const CompressionPlugin = require('compression-webpack-plugin');
+
 module.exports = {
   output: {
     publicPath: '/',
@@ -35,6 +39,23 @@ module.exports = {
       title: 'Senmu-Vault',
       filename: 'index.html',
       favicon: './public/favicon.ico',
+      scriptLoading: 'defer',
+      inject: true,
+      minify: true,
+      templateParameters: (compilation, assets, options) => {
+        const files = assets.js || [];
+        const vendorFile = files.find(file => file.includes('react-vendor')) || '';
+        
+        return {
+          htmlWebpackPlugin: {
+            tags: assets,
+            options: options
+          },
+          files,
+          vendorFile,
+          options
+        };
+      },
       template: resolve(__dirname, '../src/index-prod.html'),
     }),
     new GenerateSW({
@@ -44,7 +65,7 @@ module.exports = {
       clientsClaim: true,
       skipWaiting: true,
       // 不包含 workbox 运行时代码
-      excludeChunks: ['workbox-runtime'],
+      excludeChunks: ['workbox-runtime', 'runtime'],
       // 导航预加载
       navigateFallback: '/index.html',
       // 静态资源缓存
@@ -88,6 +109,16 @@ module.exports = {
         },
       ],
     }),
+    // 添加 Gzip 压缩插件
+    // new CompressionPlugin({
+    //   algorithm: 'brotliCompress',
+    //   test: /\.(js|css|html|svg)$/,
+    //   filename: "[path][base].br",
+    //   threshold: 10240, // 只有大于 10KB 的资源才会被压缩
+    //   minRatio: 0.8, // 只有压缩率小于 0.8 的资源才会被压缩
+    // }),
+    // 使用 InlineChunkHtmlPlugin 替代
+    new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
     // new BundleAnalyzerPlugin(),
   ],
 };
