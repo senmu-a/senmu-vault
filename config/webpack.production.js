@@ -119,6 +119,25 @@ module.exports = {
     // }),
     // 使用 InlineChunkHtmlPlugin 替代
     new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
+    new WebpackManifestPlugin({
+      fileName: 'manifest.json',
+    }),
+    // 删除 runtime 文件
+    {
+      apply(compiler) {
+        compiler.hooks.emit.tapAsync('RemoveRuntimeFiles', (compilation, callback) => {
+          // 查找所有输出文件
+          Object.keys(compilation.assets).forEach(assetName => {
+            // 如果文件名包含 runtime，删除该资源
+            if (assetName.includes('runtime')) {
+              console.log(`Removing asset: ${assetName}`);
+              delete compilation.assets[assetName];
+            }
+          });
+          callback();
+        });
+      }
+    },
     // new BundleAnalyzerPlugin(),
   ],
 };

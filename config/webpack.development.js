@@ -2,8 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { resolve, join } = require('path');
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 const notifier = require('node-notifier');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const InlineChunkHtmlPlugin = require('inline-chunk-html-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const port = 3000;
 module.exports = {
@@ -68,8 +67,6 @@ module.exports = {
       },
       clearConsole: true,
     }),
-    // 使用 InlineChunkHtmlPlugin 替代
-    new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 };

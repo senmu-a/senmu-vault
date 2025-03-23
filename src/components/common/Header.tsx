@@ -75,9 +75,10 @@ const Header = () => {
                 src="/logo.png"
                 alt="Logo"
               /> */}
-              <span className="ml-2 text-xl font-bold text-gray-900 dark:text-gray-200">
+              {/* <span className="ml-2 text-xl font-bold text-gray-900 dark:text-gray-200">
                 Senmu Vault
-              </span>
+              </span> */}
+              <span className="ml-2 text-xl font-bold logo-gradient-effect">Senmu Vault</span>{' '}
             </NavLink>
           </div>
 

@@ -13,5 +13,32 @@
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        // 立即注销所有 Service Worker
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          registrations.forEach(reg => {
+            reg.unregister();
+            console.log('Service Worker 已注销');
+          });
+        });
+        
+        // 清除所有缓存存储
+        if ('caches' in window) {
+          caches.keys().then(function(cacheNames) {
+            cacheNames.forEach(cacheName => {
+              caches.delete(cacheName);
+              console.log(`缓存 ${cacheName} 已删除`);
+            });
+          });
+        }
+        
+        // 清除 IndexedDB
+        if (window.indexedDB) {
+          const deleteRequest = indexedDB.deleteDatabase('workbox-precache');
+          deleteRequest.onsuccess = () => console.log('IndexedDB 已清除');
+        }
+      }
+    </script>
   </body>
 </html>
