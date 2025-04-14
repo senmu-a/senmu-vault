@@ -5,6 +5,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { GenerateSW } = require('workbox-webpack-plugin');
 const { resolve } = require('path');
 const InlineChunkHtmlPlugin = require('inline-chunk-html-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // const CompressionPlugin = require('compression-webpack-plugin');
 

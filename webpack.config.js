@@ -8,7 +8,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 const { ThemedProgressPlugin } = require('themed-progress-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 const webpackBaseConfig = {
   entry: {
