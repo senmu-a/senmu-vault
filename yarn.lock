@@ -6379,8 +6379,8 @@ obuf@^1.0.0, obuf@^1.1.2:
 
 ogl@^1.0.11:
   version "1.0.11"
-  resolved "http://r.npm.sankuai.com/ogl/download/ogl-1.0.11.tgz#369d6b8681035500fbb14d461f4d74f014527b88"
-  integrity sha1-Np1rhoEDVQD7sU1GH0108BRSe4g=
+  resolved "https://registry.npmjs.org/ogl/-/ogl-1.0.11.tgz#369d6b8681035500fbb14d461f4d74f014527b88"
+  integrity sha512-kUpC154AFfxi16pmZUK4jk3J+8zxwTWGPo03EoYA8QPbzikHoaC82n6pNTbd+oEaJonaE8aPWBlX7ad9zrqLsA==
 
 on-finished@2.4.1, on-finished@^2.4.1:
   version "2.4.1"
